@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, List, ListItem, Text, useBreakpointValue, useDisclosure, VStack } from "@chakra-ui/react";
-import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai'
+import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useDisclosure, VStack } from "@chakra-ui/react";
+import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
     const {isOpen, onOpen,onClose} = useDisclosure();
@@ -77,6 +77,6 @@ const NavBar= ()=> {
             </Box>
         </VStack>
     );
-}
+};
 
 export default NavBar;
