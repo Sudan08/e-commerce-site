@@ -1,16 +1,19 @@
 import React from "react";
 
-import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
-    const {isOpen, onOpen,onClose} = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode();
+     
     const Icons = () =>{
         return <>
             <Box display={'flex'} gap={'10px'}>
                 <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
                 <Icon as={AiOutlineHeart} h={'25px'} w={'25px'} />
                 <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
+                <Button onClick={toggleColorMode}>Toggle</Button>
             </Box>
         </>;
     };
