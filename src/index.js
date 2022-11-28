@@ -3,12 +3,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import theme from './theme';
+import {Provider} from 'react-redux';
+import {store} from '../src/store/store'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <App/>
+        <Provider store = {store}>
+            <App/>
+        </Provider>
     </>
 );
 

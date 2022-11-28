@@ -1,4 +1,8 @@
-import { Box, Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, Text, VStack } from "@chakra-ui/react";
+
+import {useDispatch , useSelector} from 'react-redux';
+import {cartActions} from "../store/CartSlicer";
+
 
 const HomeCard = (props) =>{
     return <>
@@ -19,16 +23,25 @@ const HomeCard = (props) =>{
     </>;
 };
 
-const NewProductsCards =(props) =>{
+const NewProductsCards =({imgUrl,name,id,price}) =>{
+   
+    const dispatch = useDispatch();
+    const addToCart = () =>{
+        dispatch(cartActions.addToCart({
+            id,
+            name,
+            price
+        }));
+    };
     return <>
-        <Card bg={'transparent'}>
+        <Card bg={'transparent'} id={id}>
             <CardHeader>
-                <Image src="https://images.unsplash.com/photo-1669111959281-7f4cdd990620?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" alt="img" height={'400px'} onMouseOver={()=>{return null}}/>
+                <Image src={imgUrl} alt="img" height={'400px'} onMouseOver={()=>{return null;}}/>
             </CardHeader>
             <CardFooter justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={'2'}> 
-                <Text>Cotton T-Shirt</Text>
-                <Icon></Icon>
-                <Text fontFamily={'sans-serif'}>$ 48.5</Text>
+                <Text>{name}</Text>
+                <Text fontFamily={'sans-serif'}>$ {price}</Text>
+                <Button onClick={addToCart} >Add to cart</Button>
             </CardFooter>
         </Card>
     </>;
@@ -37,5 +50,4 @@ const NewProductsCards =(props) =>{
 
 
 export {NewProductsCards};
-// eslint-disable-next-line import/no-anonymous-default-export
 export default HomeCard;
