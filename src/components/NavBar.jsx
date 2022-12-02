@@ -2,6 +2,7 @@ import React from "react";
 
 import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
+import { Link } from "react-router-dom";
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -12,7 +13,9 @@ const NavBar= ()=> {
             <Box display={'flex'} gap={'10px'}>
                 <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
                 <Icon as={AiOutlineHeart} h={'25px'} w={'25px'} />
-                <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
+                <Link to={'/Cart'} >
+                    <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
+                </Link>
                 <Button onClick={toggleColorMode}>Toggle</Button>
             </Box>
         </>;
@@ -22,9 +25,11 @@ const NavBar= ()=> {
             <Box width={"100vw"} height={"10vh"}>
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                     <Box margin={'20px'}>
-                        <Text as="b" fontSize={"4xl"}>
-                        .Destiny
-                        </Text>
+                        <Link to={'/'}>
+                            <Text as="b" fontSize={"4xl"}>
+                            .Destiny
+                            </Text>
+                        </Link>
                     </Box>
                     {isDesktop?(
                         <>

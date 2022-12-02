@@ -1,7 +1,8 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, Heading, HStack, Icon, Image, Text, Toast, useToast, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 import {useDispatch , useSelector} from 'react-redux';
-import {cartActions} from "../store/CartSlicer";
+import {cartActions} from "../../store/CartSlicer";
 
 
 const HomeCard = (props) =>{
@@ -23,16 +24,44 @@ const HomeCard = (props) =>{
     </>;
 };
 
-const NewProductsCards =({imgUrl,name,id,price}) =>{
-   
+const NewProductsCards =({imgUrl,name,id,price}) =>{    
+    const toast = useToast();
     const dispatch = useDispatch();
-    const addToCart = () =>{
-        dispatch(cartActions.addToCart({
-            id,
-            name,
-            price
-        }));
+    const CartItems = useSelector((state)=> state.cart.itemList);
+    console.log(CartItems);
+    const handleAddToCart = () => {
+        console.log(CartItems);
+        console.log(id);
+        const existingItem = CartItems.find((item) => item.id === id);
+        console.log(existingItem);
+        if(existingItem){
+            toast({
+                position: 'top-right',
+                status:'warning',
+                title: "Item already in cart",
+                description :"You can add more quantity from cart",
+                isClosable: true,
+            });
+
+        }else{
+            dispatch(cartActions.addToCart({
+                id,
+                name,
+                price
+            }));
+       
+            toast({
+                position: 'top-right',
+                status:'success',
+                title: "Item added in cart",
+                description :"You can add more quantity from cart",
+                isClosable: true,
+            });
+      
+        }
+        
     };
+
     return <>
         <Card bg={'transparent'} id={id}>
             <CardHeader>
@@ -41,7 +70,7 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
             <CardFooter justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={'2'}> 
                 <Text>{name}</Text>
                 <Text fontFamily={'sans-serif'}>$ {price}</Text>
-                <Button onClick={addToCart} >Add to cart</Button>
+                <Button onClick={handleAddToCart} id={id}>Add to cart</Button>
             </CardFooter>
         </Card>
     </>;

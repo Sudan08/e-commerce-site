@@ -14,11 +14,7 @@ export const CartSlicer = createSlice({
             const NewItem = action.payload;
             const existingItem = state.itemList.find((item) => item.id === NewItem.id);
 
-            if (existingItem){
-                existingItem.quantiy++;
-                existingItem.totalPrice += NewItem.price;
-
-            }else{
+            if (!existingItem){
                 state.itemList.push({
                     id: NewItem.id,
                     price : NewItem.price,
@@ -27,12 +23,11 @@ export const CartSlicer = createSlice({
                     name : NewItem.name,
                 });
             }
-            state.totalItems++;
         },
         removeFromCart(){},
-        setShowcart(state){
-            state.showCart = 'true';
-        }
+        // setShowcart(state){
+        //     state.showCart = 'true';
+        // }
     }
 });
 

@@ -1,9 +1,11 @@
 import { Box, Grid, GridItem, Heading, HStack, List, ListItem, Stack, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { NewProductsCards } from './Cards';
-import { Fakedata } from './Fakedata';
+import { Fakedata } from '../../fakeData/Fakedata';
+import { useSelector } from 'react-redux';
 
 const Products = () => {
+    const CartItems = useSelector((state)=> state.cart.itemList);
     return (
         <VStack>
             <Box width={'100vw'}>
