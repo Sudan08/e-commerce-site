@@ -28,30 +28,25 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
     const toast = useToast();
     const dispatch = useDispatch();
     const CartItems = useSelector((state)=> state.cart.itemList);
-    console.log(CartItems);
     const handleAddToCart = () => {
-        console.log(CartItems);
-        console.log(id);
         const existingItem = CartItems.find((item) => item.id === id);
-        console.log(existingItem);
+     
         if(existingItem){
             toast({
-                position: 'top-right',
+                position: 'bottom-right',
                 status:'warning',
                 title: "Item already in cart",
                 description :"You can add more quantity from cart",
                 isClosable: true,
             });
-
         }else{
             dispatch(cartActions.addToCart({
                 id,
                 name,
                 price
             }));
-       
             toast({
-                position: 'top-right',
+                position: 'bottom-right',
                 status:'success',
                 title: "Item added in cart",
                 description :"You can add more quantity from cart",
@@ -65,7 +60,7 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
     return <>
         <Card bg={'transparent'} id={id}>
             <CardHeader>
-                <Image src={imgUrl} alt="img" height={'400px'} onMouseOver={()=>{return null;}}/>
+                <Image src={imgUrl} alt="img" height={["200px","350px","450px"]} onMouseOver={()=>{return null;}}/>
             </CardHeader>
             <CardFooter justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={'2'}> 
                 <Text>{name}</Text>

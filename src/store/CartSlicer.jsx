@@ -13,7 +13,7 @@ export const CartSlicer = createSlice({
         addToCart(state,action){
             const NewItem = action.payload;
             const existingItem = state.itemList.find((item) => item.id === NewItem.id);
-
+ 
             if (!existingItem){
                 state.itemList.push({
                     id: NewItem.id,
@@ -24,10 +24,19 @@ export const CartSlicer = createSlice({
                 });
             }
         },
-        removeFromCart(){},
-        // setShowcart(state){
-        //     state.showCart = 'true';
-        // }
+        removeFromCart(state,action){
+            const id = action.payload;
+            console.log(id);
+            if(id){
+                state.itemList.filter((item)=>item.id !== id);
+            }
+            else{
+                console.log("Error");
+            }
+        },
+        setShowcart(state){
+            state.showCart = 'true';
+        }
     }
 });
 

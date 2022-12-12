@@ -1,7 +1,8 @@
-import React from "react";
+// import {} from "react";
 
-import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
+import {BsMoon, BsSun} from 'react-icons/bs';
 import { Link } from "react-router-dom";
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
@@ -9,15 +10,22 @@ const NavBar= ()=> {
     const { colorMode, toggleColorMode } = useColorMode();
      
     const Icons = () =>{
+        const number = 1;
         return <>
-            <Box display={'flex'} gap={'10px'}>
+            <HStack  gap={'10px'}>
                 <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
                 <Icon as={AiOutlineHeart} h={'25px'} w={'25px'} />
                 <Link to={'/Cart'} >
                     <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
                 </Link>
-                <Button onClick={toggleColorMode}>Toggle</Button>
-            </Box>
+               
+                <Flex bg={'rgba(122,122,122,0.3)'} borderRadius={'100%'} height='25px' width='25px' fontSize={'2xl'} justifyContent="center" alignItems={"center"} padding={'1'}>{number}</Flex>
+               
+                {colorMode === "light"
+                    ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
+                    : (<Icon h={'25px'} w={'25px'} as={BsMoon} onClick={toggleColorMode}></Icon>)}
+                
+            </HStack>
         </>;
     };
     return (
