@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import React from 'react';
 
 export const CartSlicer = createSlice({
     name: 'cart',
@@ -18,17 +17,23 @@ export const CartSlicer = createSlice({
                 state.itemList.push({
                     id: NewItem.id,
                     price : NewItem.price,
-                    quantiy : 1,
+                    quantity : 1,
                     totalPrice : NewItem.price,
                     name : NewItem.name,
+                    imgUrl : NewItem.imgUrl,
                 });
             }
+            state.totalItems +=1;
         },
         removeFromCart(state,action){
-            const id = action.payload;
-            console.log(id);
+            const id = action.payload.id;
             if(id){
-                state.itemList.filter((item)=>item.id !== id);
+                state.itemList.forEach((item)=>{
+                    if(item.id === id){
+                        state.itemList.splice(state.itemList.indexOf(item),1);
+                    }
+                });
+                state.totalItems -=1;
             }
             else{
                 console.log("Error");
@@ -36,6 +41,36 @@ export const CartSlicer = createSlice({
         },
         setShowcart(state){
             state.showCart = 'true';
+        },
+        increaseQuantity(state,action){
+            const id = action.payload.id;
+            if(id){
+                state.itemList.forEach((item)=>{
+                    if(item.id === id){
+                        
+                        item.quantity += 1;
+                        item.totalPrice = item.price * item.quantity;
+                        
+                    }
+                });
+            }
+            else{
+                console.log("Error");
+            }
+        },
+        decreaseQuantity(state,action){
+            const id = action.payload.id;
+            if(id){
+                state.itemList.forEach((item)=>{
+                    if (item.id === id){
+                        
+                       
+                        item.quantity -= 1;
+                        item.totalPrice = item.quantity * item.price;
+                        
+                    }
+                });
+            }
         }
     }
 });

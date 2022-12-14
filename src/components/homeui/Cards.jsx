@@ -43,7 +43,8 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
             dispatch(cartActions.addToCart({
                 id,
                 name,
-                price
+                price,
+                imgUrl,
             }));
             toast({
                 position: 'bottom-right',

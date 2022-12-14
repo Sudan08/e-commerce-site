@@ -7,8 +7,42 @@ import { cartActions } from '../../store/CartSlicer';
 
 const Items = () => {
     const toast = useToast();
-    const CartItems = useSelector((state)=> state.cart.itemList);
+ 
+    const CartItem = useSelector((state)=> state.cart.itemList);
     const dispatch = useDispatch();
+
+    const handleIncrement = (id) =>{
+        if(id){
+            dispatch(cartActions.increaseQuantity({
+                id
+            }));
+        }else{
+            console.log("error");
+        }
+    };
+    const handleDecrement = (id) =>{
+        if(id){
+            CartItem.forEach(item => {
+                console.log(item);
+                if(item.id === id){
+                    if(item.quantity > 1){
+                        dispatch(cartActions.decreaseQuantity({
+                            id
+                        }));
+                    }else{
+                        toast({
+                            position: 'bottom-right',
+                            status:'error',
+                            title: "Quantity can't be less than 1",
+                            isClosable: true,
+                        });
+                    }
+                }
+            });
+        
+           
+       
+        }};
     const handleRemoveItem = (id) => {
         if(id){
             dispatch(cartActions.removeFromCart({
@@ -30,45 +64,47 @@ const Items = () => {
         }
        
     };
-    // const handleIncrement =() =>{
+    
+    return(
+        <>
+            <Box padding={'50px'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} w={'60vw'}>
+                {CartItem.length == 0?<Text>No items added</Text>:CartItem.map((item , index )=>{
+                    console.log(item);
+                    return(
+                        <HStack key={index} marginTop="2rem" justifyContent={"space-between"}>
+                            <Box h={'100px'} w={'100px'}>
+                                <Image src={item.imgUrl} alt="img" height={'inherit'} onMouseOver={()=>{return null;}}/>
+                            </Box>
+                            <Box>
+                                <VStack>
+                                    <Text>{item.name}</Text>
+                                    <Text>$ {item.price}</Text>
+                                    <Text>No : {item.quantity}</Text>
+                                </VStack>    
+                            </Box>
+                            <Box display={'flex'}  gap={2}>
+                                <Button onClick={()=>handleIncrement(item.id)}>+</Button>
+                                <Button onClick={()=>handleDecrement(item.id)}>-</Button>
+                                <Button onClick={()=>handleRemoveItem(item.id)} ><Icon as={BsFillTrashFill}/></Button>
 
-    // };
-    return<>
-        <Box padding={'50px'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} w={'60vw'}>
-            {CartItems.length == 0?<Text>No items added</Text>:CartItems.map((item , index )=>{
-                return(
-                    <HStack key={index} marginTop="2rem" justifyContent={"space-between"}>
-                        <Box h={'100px'} w={'100px'}>
-                            <Image src={"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg"} alt="img" height={'inherit'} onMouseOver={()=>{return null;}}/>
-                        </Box>
-                        <Box>
-                            <VStack>
-                                <Text>{item.name}</Text>
-                                <Text>{item.price}</Text>
-                            </VStack>    
-                        </Box>
-                        <Box display={'flex'}  gap={2}>
-                            <Button onClick={"#"}>+</Button>
-                            <Button>-</Button>
-                            <Button onClick={handleRemoveItem(item.id)} ><Icon as={BsFillTrashFill}/></Button>
-
-                        </Box>
-                    </HStack>
-                );
-            })}
+                            </Box>
+                        </HStack>
+                    );
+                })}
                 
            
-        </Box>
-    </>;
+            </Box>
+        </>);
 };
 
 const CartItems = () => {
-    const [total,setTotal] = useState(0);
+ 
     const buyingItems = useSelector((state)=> state.cart.itemList);
-
+    
+    const total = buyingItems.reduce((total,item)=>total + item.totalPrice,0);
    
     return (
-        <Box w={'100vw'} mt={'50px'}>
+        <Box w={'100vw'} mt={'50px'} >
             <HStack justifyContent={'space-around'} alignItems={'center'}>
                 <Box w={'auto'}>
                     <VStack 
@@ -85,23 +121,36 @@ const CartItems = () => {
                         justifyContent="center"
                     >
                         <Box padding={'50px'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} w={'40vw'}>
-                            <Text fontSize={'2xl'} borderBottom={'1px solid black'}>Total</Text>
-                            {buyingItems.map((item , index)=>{
-                                return(
-                                    <VStack alignItems={"flex-start"} key={index} >
-                                        <HStack  justifyContent={'space-between'} w={"30vw"} >
-                                            <Text>{item.name}</Text>
-                                            <Text>${item.price}</Text> 
-                                        </HStack>
-                                        <HStack justifyContent={'space-between'} w={"30vw"} >
-                                            <Text>Total:</Text>
-                                            <Text>{total}</Text>
-                                            
+                            {buyingItems.length == 0?<Text>No items added</Text>:
+                                <>
+                                    <VStack alignItems={"flex-start"} margin={3} >
+                                        <HStack justifyContent={'space-between'} w={"32vw"}  borderBottom={'1px solid black'}>
+                                            <Text fontSize={'2xl'}>Name</Text>
+                                            <Text fontSize={'2xl'}>Quantity</Text>
+                                            <Text fontSize={'2xl'}>Price</Text>
                                         </HStack>
                                     </VStack>
+                                    {buyingItems.map((item , index)=>{
+                                        return(
+                                            <VStack alignItems={"flex-start"} key={index} margin={3}>
+                                                <HStack  justifyContent={'space-between'} w={"32vw"} >
+                                                    <Text>{item.name}</Text>
+                                                    <Text>{item.quantity}</Text>
+                                                    <Text>${item.price}</Text> 
+                                                </HStack>
+                                        
+                                            </VStack>
                                     
-                                );
-                            })}
+                                        );
+                                    })}
+                                    <Box alignItems={"flex-start"} display={"flex"} margin={3} borderTop={'1px solid black'}>
+                                        <HStack justifyContent={'space-between'} w={"32vw"} >
+                                            <Text fontSize={'2xl'} >Total:</Text>
+                                            <Text>${total}</Text>         
+                                        </HStack>
+                                    </Box>
+                                </>
+                            }
                         </Box>
                     </VStack>
 

@@ -3,6 +3,7 @@
 import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
 import {BsMoon, BsSun} from 'react-icons/bs';
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
@@ -10,7 +11,8 @@ const NavBar= ()=> {
     const { colorMode, toggleColorMode } = useColorMode();
      
     const Icons = () =>{
-        const number = 1;
+        const totalItems = useSelector((state)=>state.cart.totalItems);
+        console.log(totalItems);
         return <>
             <HStack  gap={'10px'}>
                 <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
@@ -19,7 +21,7 @@ const NavBar= ()=> {
                     <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
                 </Link>
                
-                <Flex bg={'rgba(122,122,122,0.3)'} borderRadius={'100%'} height='25px' width='25px' fontSize={'2xl'} justifyContent="center" alignItems={"center"} padding={'1'}>{number}</Flex>
+                <Flex bg={'rgba(122,122,122,0.3)'} borderRadius={'100%'} height='25px' width='25px' fontSize={'2xl'} justifyContent="center" alignItems={"center"} padding={'1'}>{totalItems}</Flex>
                
                 {colorMode === "light"
                     ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
