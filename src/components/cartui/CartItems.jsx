@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import { Box, Button, HStack, Icon, Image, Text, Toast, useToast, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, Icon, Image, Text, Toast, useToast, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsFillTrashFill } from 'react-icons/bs';
@@ -148,6 +148,10 @@ const CartItems = () => {
                                             <Text fontSize={'2xl'} >Total:</Text>
                                             <Text>${total}</Text>         
                                         </HStack>
+                                        
+                                    </Box>
+                                    <Box w={"32vw"} display={"flex"} alignItems={"center"} justifyContent={"center"}>
+                                        <Button px={"10vw"}>Proceed to payment</Button>
                                     </Box>
                                 </>
                             }

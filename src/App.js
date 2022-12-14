@@ -6,6 +6,7 @@ import Cart from "./pages/Cart";
 import { Provider, useSelector } from "react-redux";
 import { store } from "./store/store";
 import { useEffect } from "react";
+import Signup from "./pages/Signup";
 
 function App() {
     const data = useSelector((state)=> state.cart.itemList);
@@ -16,7 +17,8 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
-                    <Route path="cart" element={<Cart />}></Route>
+                    <Route path="Cart" element={<Cart />}></Route>
+                    <Route path="Signup" element={<Signup />}></Route>
                 </Routes>
             </BrowserRouter>
           

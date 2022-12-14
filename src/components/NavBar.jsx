@@ -55,7 +55,9 @@ const NavBar= ()=> {
                                 </List>
                             </VStack>
                             <Box display={'flex'} mx={'25px'} gap={'10px'} alignItems={'center'}>
-                                <Text>Login/Register</Text>
+                                <Link to={"/Signup"}>
+                                    <Text>Login/Register</Text>
+                                </Link>
                                 <Icons />
                             </Box>
                         </>
