@@ -1,6 +1,7 @@
-import { Box, Button, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 const SignupUI = () => {
 
@@ -45,9 +46,13 @@ const SignupUI = () => {
 
                                 
                             </form>
-                            <Button onClick={handleSubmit("#")}>Login</Button>
-
+                            <HStack>
+                                <Checkbox>Remember me</Checkbox>
+                                <Button onClick={handleSubmit("#")}>Login</Button>
+                            </HStack>
+                            <Text>or</Text>
                         </VStack>
+                        
                     </Box>
                     <Box>
                         <Image src="https://images.unsplash.com/photo-1670979313223-59d7225b3c1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" w={"25vw"} h={"70vh"} backgroundSize={'cover'} backgroundRepeat={"no-repeat"} backgroundPosition={"center"}/>
