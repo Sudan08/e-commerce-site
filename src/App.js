@@ -7,6 +7,7 @@ import { Provider, useSelector } from "react-redux";
 import { store } from "./store/store";
 import { useEffect } from "react";
 import Signup from "./pages/Signup";
+import Register from "./pages/Register";
 
 function App() {
     const data = useSelector((state)=> state.cart.itemList);
@@ -19,11 +20,9 @@ function App() {
                     <Route path="/" element={<Home />}></Route>
                     <Route path="Cart" element={<Cart />}></Route>
                     <Route path="Signup" element={<Signup />}></Route>
-                    <Route path="register" element={<Home />}></Route>
+                    <Route path="Register" element={<Register />}></Route>
                 </Routes>
             </BrowserRouter>
-          
-
         </ChakraProvider>
     );
 }
