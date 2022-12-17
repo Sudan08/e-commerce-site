@@ -1,4 +1,4 @@
 {
   "extends": ["react-app", "react-app/jest", "prettier"],
-  "rules": { "semi": "warn", "indent": "warn" }
+  "rules": { "semi": "error", "indent": "error"}
 }

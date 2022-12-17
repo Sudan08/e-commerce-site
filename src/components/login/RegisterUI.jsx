@@ -2,16 +2,31 @@ import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
+
+const schema = yup.object().shape({
+    name : yup.string().required("Name is required"),
+    email : yup.string().required("Email is required").email("Invalid email address"),
+    password : yup.string().min(6,'Password must be atleast 6 characters').required("Password is required"),
+    confirmPassword : yup.string().required("Confirm Password is requi red").oneOf([yup.ref('password'),null],"Password don't match"),
+});
+
+const formOptions = { resolver : yupResolver(schema)};
 
 
 
 const RegisterUI = () => {
 
-    const {handleSubmit,register,formState:{errors},watch}= useForm();
-    const onSubmit = (data, e) => console.log(data);
-    const Password = watch("password");
-    // console.log(Password);
+    const {handleSubmit,register,formState:{errors}}= useForm(formOptions);
+
+   
+    const onSubmit = (data) => {
+        alert(JSON.stringify(data));
+        
+    };
+    
 
     return (
         <Box h={"100vh"} w={"100vw"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -59,15 +74,14 @@ const RegisterUI = () => {
                                 </FormErrorMessage>
 
                             </FormControl>
-                            <FormControl isInvalid={errors.password} width={"30vw"}>
+                            <FormControl isInvalid={errors.confirmPassword} width={"30vw"}>
                                 <FormLabel as="confirm_password" />
                                 <Input id ="confirm_password" type="password" placeholder='Confirm your password'
                                     {...register("confirmPassword",{
                                         required:'Confirm Password is required',
-                                        validate : value => console.log(value),
                                     })} />    
                                 <FormErrorMessage>
-                                    {errors.confirmPassword && errors.confirmPassword.message}
+                                    {errors.confirmPassword && errors.confirmPassword?.message}
                                 </FormErrorMessage>
                             </FormControl>
                             <HStack w={"30vw"} justifyContent={"space-between"} mt={3}>
