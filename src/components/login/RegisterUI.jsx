@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { BASEURL } from '../../api/api';
+import axios from 'axios';
 
 
 const schema = yup.object().shape({
@@ -16,14 +18,27 @@ const schema = yup.object().shape({
 const formOptions = { resolver : yupResolver(schema)};
 
 
-
 const RegisterUI = () => {
 
     const {handleSubmit,register,formState:{errors}}= useForm(formOptions);
 
-   
+
+    
     const onSubmit = (data) => {
-        alert(JSON.stringify(data));
+        // eslint-disable-next-line no-unused-expressions
+        axios.post(BASEURL+'/auth/local/register',{
+            username:data.Username,
+            email:data.email,
+            password:data.password,
+        })
+            .then(res=>{
+                console.log('Well done!');
+                console.log('User profile', res.data.user);
+                console.log('User token', res.data.jwt);
+            })
+            .catch(err=>{
+                console.log('An error occurred:', err.response);
+            });
         
     };
     
@@ -44,6 +59,18 @@ const RegisterUI = () => {
                                     })}/>
                                 <FormErrorMessage>
                                     {errors.name && errors.name.message}
+                                </FormErrorMessage>
+                                    
+                            </FormControl>
+
+                            <FormControl isInvalid={errors.Username} width={"30vw"}>
+                                <FormLabel as="Username" />
+                                <Input id ="Username" type="Username" placeholder='Enter your Username'
+                                    {...register("Username",{
+                                        required:'Username is required',
+                                    })}/>
+                                <FormErrorMessage>
+                                    {errors.Username && errors.Username.message}
                                 </FormErrorMessage>
                                     
                             </FormControl>
@@ -85,7 +112,7 @@ const RegisterUI = () => {
                                 </FormErrorMessage>
                             </FormControl>
                             <HStack w={"30vw"} justifyContent={"space-between"} mt={3}>
-                                <Checkbox>Accept terms and Conditions</Checkbox>
+                                <Checkbox isRequired>Accept terms and Conditions</Checkbox>
                                 <Button type="submit" colorScheme={"green"} >Register</Button>
                             </HStack>
 

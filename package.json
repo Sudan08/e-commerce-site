@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vitejs/plugin-react": "^3.0.0",
     "axios": "^1.2.1",
     "chakra": "^0.0.3",
     "firebase": "^9.15.0",
@@ -48,6 +49,7 @@
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "2.7.1"
+    "prettier": "^2.7.1",
+    "vite": "^4.0.2"
   }
 }
