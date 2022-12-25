@@ -12,7 +12,6 @@ const NavBar= ()=> {
      
     const Icons = () =>{
         const totalItems = useSelector((state)=>state.cart.totalItems);
-        console.log(totalItems);
         return <>
             <HStack  gap={'10px'}>
                 <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
@@ -55,9 +54,13 @@ const NavBar= ()=> {
                                 </List>
                             </VStack>
                             <Box display={'flex'} mx={'25px'} gap={'10px'} alignItems={'center'}>
-                                <Link to={"/Signup"}>
-                                    <Text>Login/Register</Text>
-                                </Link>
+                                {localStorage.getItem('token')?<Text>{localStorage.getItem('userName')}</Text>:
+                                    <>
+                                        <Link to={"/Signup"}>
+                                            <Text>Login/Register</Text>
+                                        </Link>
+                                       
+                                    </>}
                                 <Icons />
                             </Box>
                         </>

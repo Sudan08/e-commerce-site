@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, Toast, VStack } from '@chakra-ui/react';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { BASEURL } from '../../api/api';
 import axios from 'axios';
+import { useToast } from '@chakra-ui/react';
 
 
 const schema = yup.object().shape({
@@ -22,7 +23,7 @@ const RegisterUI = () => {
 
     const {handleSubmit,register,formState:{errors}}= useForm(formOptions);
 
-
+    const toast = useToast();
     
     const onSubmit = (data) => {
         // eslint-disable-next-line no-unused-expressions
@@ -32,9 +33,14 @@ const RegisterUI = () => {
             password:data.password,
         })
             .then(res=>{
-                console.log('Well done!');
-                console.log('User profile', res.data.user);
-                console.log('User token', res.data.jwt);
+                if(res.status === 200){
+                    toast({
+                        title: "Account created.",
+                        description: "We've created your account for you.",
+                    });
+                    localStorage.setItem('token',res.data.jwt);
+                    localStorage.setItem('userName',res.data.user.username);
+                }              
             })
             .catch(err=>{
                 console.log('An error occurred:', err.response);
