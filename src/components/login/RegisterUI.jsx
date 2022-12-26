@@ -40,7 +40,8 @@ const RegisterUI = () => {
                     });
                     localStorage.setItem('token',res.data.jwt);
                     localStorage.setItem('userName',res.data.user.username);
-                }              
+                }       
+                       
             })
             .catch(err=>{
                 console.log('An error occurred:', err.response);

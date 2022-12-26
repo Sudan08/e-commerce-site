@@ -1,15 +1,40 @@
-import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, useToast, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-
+import { BASEURL } from '../../api/api';
+import axios from 'axios';
+import { Toast } from '@chakra-ui/react';
 
 
 
 const LoginUI = () => {
 
     const {handleSubmit,register,formState:{errors}}= useForm();
+
+    const toast = useToast();
     
+    const onsubmit = (data) => {
+        axios.post(BASEURL+'/auth/local',{
+            identifier: data.email,
+            password: data.password,
+        })
+            .then(res=>{
+                console.log(res);
+                if(res.status === 200){
+                    toast({
+                        title: "Logged in",
+                        description: "You can procced to buy.",
+                    });
+                    localStorage.setItem('token',res.data.jwt);
+                    localStorage.setItem('userName',res.data.user.username);
+                }       
+            })
+            .catch(err=>{
+                console.log('An error occurred:', err.response);
+            });
+    };
+
     return (
         <Box h={"100vh"} w={"100vw"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
             <HStack w={"100vw"} justifyContent={"space-between"}>
@@ -36,6 +61,7 @@ const LoginUI = () => {
                                 <Input id ="password" type="password" placeholder='Enter your password'
                                     {...register("password",{
                                         required:'Password is required',
+                                        minLength: 6
                                     })}/>
                                 <FormErrorMessage>
                                     {errors.password && errors.password.message}
@@ -47,7 +73,7 @@ const LoginUI = () => {
                         </form>
                         <HStack w={"30vw"} justifyContent={"space-between"}>
                             <Checkbox>Remember me</Checkbox>
-                            <Button onClick={handleSubmit("#")} colorScheme={"green"} >Login</Button>
+                            <Button onClick={handleSubmit(onsubmit)} colorScheme={"green"} >Login</Button>
                         </HStack>
                         <HStack w={"30vw"} justifyContent={"space-between"} alignItems="center">
                             <Box borderBottom={"1px solid black"} w={"13vw"}></Box>
