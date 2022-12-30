@@ -21,11 +21,11 @@ const NavBar= ()=> {
                 </Link>
                
                 <Flex bg={'rgba(122,122,122,0.3)'} borderRadius={'100%'} height='25px' width='25px' fontSize={'2xl'} justifyContent="center" alignItems={"center"} padding={'1'}>{totalItems}</Flex>
-               
-                {colorMode === "light"
-                    ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
-                    : (<Icon h={'25px'} w={'25px'} as={BsMoon} onClick={toggleColorMode}></Icon>)}
-                
+                <Link to='/'>
+                    {colorMode === "light"
+                        ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
+                        : (<Icon h={'25px'} w={'25px'} as={BsMoon} onClick={toggleColorMode}></Icon>)}
+                </Link>
             </HStack>
         </>;
     };
@@ -44,9 +44,13 @@ const NavBar= ()=> {
                         <>
                             <VStack>
                                 <List display={'flex'} flexDirection={"row"} margin={'3px'} gap={'30px'} alignItems={'center'} fontSize={'20px'}>
-                                    <ListItem>Home</ListItem>
-                                    <ListItem>Women's</ListItem>
-                                    <ListItem>Men's</ListItem>
+                                    <Link to={'/'}>
+                                        <ListItem>Home</ListItem>
+                                    </Link>
+                                    <Link to={'/Women'}>
+                                        <ListItem>Women's</ListItem>
+                                    </Link>
+                                    <ListItem>Men's</ListItem> 
                                     <ListItem>Shop</ListItem>
                                     <ListItem>Pages</ListItem>
                                     <ListItem>Blog</ListItem>

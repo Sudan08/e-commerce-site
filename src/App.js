@@ -8,6 +8,7 @@ import { store } from "./store/store";
 import { useEffect } from "react";
 import Signup from "./pages/Signup";
 import Register from "./pages/Register";
+import WomensPage from "./pages/WomensPage";
 
 function App() {
     const data = useSelector((state)=> state.cart.itemList);
@@ -21,6 +22,7 @@ function App() {
                     <Route path="Cart" element={<Cart />}></Route>
                     <Route path="Signup" element={<Signup />}></Route>
                     <Route path="Register" element={<Register />}></Route>
+                    <Route path="Women" element={<WomensPage />}></Route>
                 </Routes>
             </BrowserRouter>
         </ChakraProvider>

@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, Toast, VStack } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { useRef , useState} from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { BASEURL } from '../../api/api';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/react';
-
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
     name : yup.string().required("Name is required"),
@@ -20,12 +20,16 @@ const formOptions = { resolver : yupResolver(schema)};
 
 
 const RegisterUI = () => {
+    const [authenticated , setAuthenticated] = useState(false);
+
+    const navigate = useNavigate();
 
     const {handleSubmit,register,formState:{errors}}= useForm(formOptions);
 
     const toast = useToast();
     
-    const onSubmit = (data) => {
+    const onSubmit = (data ,e ) => {
+        e.preventDefault();
         // eslint-disable-next-line no-unused-expressions
         axios.post(BASEURL+'/auth/local/register',{
             username:data.Username,
@@ -40,14 +44,20 @@ const RegisterUI = () => {
                     });
                     localStorage.setItem('token',res.data.jwt);
                     localStorage.setItem('userName',res.data.user.username);
+                    setAuthenticated(()=>true);
                 }       
-                       
             })
             .catch(err=>{
                 console.log('An error occurred:', err.response);
             });
-        
+
     };
+
+    if(authenticated){
+        navigate('/');
+    }
+
+
     
 
     return (

@@ -1,9 +1,9 @@
 import { Box, Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Text, useToast, VStack } from '@chakra-ui/react';
-import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BASEURL } from '../../api/api';
 import axios from 'axios';
+import  { useRef , useState} from 'react';
 import { Toast } from '@chakra-ui/react';
 
 
@@ -11,6 +11,10 @@ import { Toast } from '@chakra-ui/react';
 const LoginUI = () => {
 
     const {handleSubmit,register,formState:{errors}}= useForm();
+
+    const [authenticated , setAuthenticated] = useState(false);
+
+    const navigate = useNavigate();
 
     const toast = useToast();
     
@@ -28,12 +32,17 @@ const LoginUI = () => {
                     });
                     localStorage.setItem('token',res.data.jwt);
                     localStorage.setItem('userName',res.data.user.username);
-                }       
+                    setAuthenticated(()=>true);
+                }      
+                
             })
             .catch(err=>{
                 console.log('An error occurred:', err.response);
             });
     };
+    if(authenticated){
+        navigate("/");
+    }
 
     return (
         <Box h={"100vh"} w={"100vw"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
