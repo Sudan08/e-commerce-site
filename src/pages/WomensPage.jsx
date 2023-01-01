@@ -1,6 +1,7 @@
-import { Box, Button, HStack, Input, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, HStack, Icon, Input, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import NavBar from '../components/NavBar';
+import {AiOutlineSearch} from 'react-icons/ai';
 
 const WomensPage = () => {
     return (
@@ -14,9 +15,9 @@ const WomensPage = () => {
                                 Price
                             </Text>
                             <HStack>
-                                <Input />
-                                <Input />
-                                <Button><Icon /></Button>
+                                <Input placeholder='Min'/>
+                                <Input placeholder='Max'/>
+                                <Button><Icon as={AiOutlineSearch}/></Button>
                             </HStack>
                             
                         </VStack>
