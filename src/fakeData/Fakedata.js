@@ -3,7 +3,7 @@ export  const Fakedata = [
         id:1,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 100,
    
     },
     {
@@ -24,35 +24,35 @@ export  const Fakedata = [
         id:4,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 250000,
        
     },
     {
         id:5,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 30,
     
     },
     {
         id:6,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 20,
        
     },
     {
         id:7,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 750,
        
     },
     {
         id:8,
         name:"Cotton T-shirt",
         imgUrl:"https://i.pinimg.com/564x/cc/be/60/ccbe607ae6eabcdc6753ebb481158057.jpg ",
-        price : 250,
+        price : 850,
        
     },
 
