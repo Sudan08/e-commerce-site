@@ -13,7 +13,6 @@ const MenPage = () => {
         setSort(e.target.value);
     };
     useEffect(()=>{
-        console.log(sort);
         if(sort === 'lh'){
             Fakedata.sort((a,b) => b.price - a.price);
             console.log(Fakedata);
