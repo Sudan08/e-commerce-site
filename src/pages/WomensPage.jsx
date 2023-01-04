@@ -9,19 +9,6 @@ import { useMemo } from 'react';
 
 const WomensPage = () => {
     const [sort , setSort] = useState('');
-
-    // const handlesort = (e) => {
-    //     e.preventDefault();
-    //     setSort(e.target.value);
-    // };
-    // useEffect(()=>{
-    //     console.log(sort);
-   
-    //     else if(sort === 'hl'){
-    //         Fakedata.sort((a,b) => a.price - b.price);
-    //         console.log(Fakedata);
-    //     }
-    // },[sort]);
     
     const data = useMemo(()=>{
         if(sort === 'lh'){
