@@ -1,25 +1,26 @@
 import { Button, Grid, GridItem, HStack, Icon, Input, Select, Text, VStack } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
+import useGetItems from '../components/customHooks/useGetItems';
 import { NewProductsCards } from '../components/homeui/Cards';
 import NavBar from '../components/NavBar';
-import { Fakedata } from '../fakeData/Fakedata';
+// import { data } from '../fakeData/Fakedata';
 
 const MenPage = () => {
-
+    const {result:{data}} = useGetItems("mendatas");
     const [sort , setSort] = useState('');
     
-    const data = useMemo(()=>{
+    const menItems = useMemo(()=>{
         if(sort === 'lh'){
-            return Fakedata.sort((a,b) => a.price - b.price);
+            return data.sort((a,b) => a.price - b.price);
         }
         else if(sort === 'hl'){
-            return Fakedata.sort((a,b) => b.price - a.price);
+            return data.sort((a,b) => b.price - a.price);
         }
         else{
-            return Fakedata;
+            return data;
         }
-    },[sort]);
+    },[sort,data]);
 
     return (
         <>
@@ -50,7 +51,7 @@ const MenPage = () => {
                     </VStack>
                     <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"75vw"} m={"5"}>
                         <HStack justifyContent={"space-between"} width={'75vw'} m={'3'}>
-                            <Text mx={5} fontSize={"2xl"}>Womens Cloths</Text>
+                            <Text mx={5} fontSize={"2xl"}>Men's Cloths</Text>
                             <Select width={"10vw"} mx={5} onChange={(e)=>setSort(e.target.value)}>
                                 <option hidden>Sort</option>
                                 <option value={"lh"}>Low to High</option>
@@ -59,7 +60,7 @@ const MenPage = () => {
                         </HStack>
                         <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
                          
-                            {data.map((data , index) => (
+                            {menItems.map((data , index) => (
                                 <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data.name} imgUrl={data.imgUrl} price={data.price} /></GridItem>
                         
                             ))}

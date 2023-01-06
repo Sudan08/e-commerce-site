@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import {AiOutlineSearch} from 'react-icons/ai';
 import { NewProductsCards } from '../components/homeui/Cards';
-import { Fakedata } from '../fakeData/Fakedata';
+// import { Fakedata } from '../fakeData/Fakedata';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 
