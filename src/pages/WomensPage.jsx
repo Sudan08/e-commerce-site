@@ -1,4 +1,4 @@
-import { Box, Button, Grid, GridItem, HStack, Icon, Input, Select, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import {AiOutlineSearch} from 'react-icons/ai';
@@ -9,15 +9,15 @@ import { useMemo } from 'react';
 import useGetItems from '../components/customHooks/useGetItems';
 
 const WomensPage = () => {
-    const {result:{data}} = useGetItems("mendatas");
+    const {result:{data} , status } = useGetItems("womendatas");
     const [sort , setSort] = useState('');
-    
-    const itemData = useMemo(()=>{
+    console.log(data);
+    const womenItems = useMemo(()=>{
         if(sort === 'lh'){
-            return data.sort((a,b) => a.price - b.price);
+            return data.sort((a,b) => a.attributes.price - b.attributes.price);
         }
         else if(sort === 'hl'){
-            return data.sort((a,b) => b.price - a.price);
+            return data.sort((a,b) => b.attributes.price - a.attributes.price);
         }
         else{
             return data;
@@ -60,13 +60,15 @@ const WomensPage = () => {
                                 <option value={"hl"}>High to Low</option>
                             </Select>
                         </HStack>
-                        <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
+                        {status === 'Loading'?(<Spinner size={"xl"}/>):(
+                            <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
                          
-                            {data.map((data , index) => (
-                                <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data.name} imgUrl={data.imgUrl} price={data.price} /></GridItem>
+                                {womenItems.map((data , index) => (
+                                    <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} /></GridItem>
                         
-                            ))}
-                        </Grid>
+                                ))}
+                            </Grid>
+                        )}
                     </VStack>
                 </HStack>
             </VStack>
