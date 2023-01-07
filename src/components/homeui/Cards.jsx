@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import {useDispatch , useSelector} from 'react-redux';
 import {cartActions} from "../../store/CartSlicer";
-
+import { BASEURL } from "../../api/api";
 
 const HomeCard = (props) =>{
     return <>
@@ -61,7 +61,7 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
     return <>
         <Card bg={'transparent'} id={id}>
             <CardHeader>
-                <Image src={imgUrl} alt="img" height={["200px","350px","450px"]} onMouseOver={()=>{return null;}}/>
+                <Image src={BASEURL+imgUrl} alt="img" height={["200px","350px","450px"]} onMouseOver={()=>{return null;}}/>
             </CardHeader>
             <CardFooter justifyContent={'center'} alignItems={'center'} flexDirection={'column'} gap={'2'}> 
                 <Text>{name}</Text>

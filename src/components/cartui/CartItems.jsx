@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
-import { Box, Button, Center, HStack, Icon, Image, Text, Toast, useToast, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, Grid, GridItem, HStack, Icon, Image, Text, Toast, useToast, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { cartActions } from '../../store/CartSlicer';
+import { BASEURL } from '../../api/api';
 
 const Items = () => {
     const toast = useToast();
@@ -73,7 +74,7 @@ const Items = () => {
                     return(
                         <HStack key={index} marginTop="2rem" justifyContent={"space-between"}>
                             <Box h={'100px'} w={'100px'}>
-                                <Image src={item.imgUrl} alt="img" height={'inherit'} onMouseOver={()=>{return null;}}/>
+                                <Image src={BASEURL+item.imgUrl} alt="img" height={'inherit'} onMouseOver={()=>{return null;}}/>
                             </Box>
                             <Box>
                                 <VStack>
@@ -133,13 +134,20 @@ const CartItems = () => {
                                     {buyingItems.map((item , index)=>{
                                         return(
                                             <VStack alignItems={"flex-start"} key={index} margin={3}>
-                                                <HStack  justifyContent={'space-between'} w={"32vw"} >
+                                                {/* <HStack  justifyContent={'space-between'} w={"32vw"} >
                                                     <Text>{item.name}</Text>
                                                     <Text>{item.quantity}</Text>
                                                     <Text>${item.price}</Text> 
-                                                </HStack>
+                                                </HStack> */}
+
+                                                <Grid templateColumns={'repeat(3,1fr)'} w={"32vw"}>
+                                                    <GridItem colSpan={1} justifySelf={"start"}>{item.name}</GridItem>
+                                                    <GridItem colSpan={1} justifySelf={"center"}>{item.quantity}</GridItem>
+                                                    <GridItem colSpan={1} justifySelf={"end"}>${item.price}</GridItem>
+                                                </Grid>
                                         
                                             </VStack>
+                                            
                                     
                                         );
                                     })}

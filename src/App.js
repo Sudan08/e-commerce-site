@@ -12,8 +12,7 @@ import WomensPage from "./pages/WomensPage";
 import MenPage from "./pages/MenPage";
 
 function App() {
-    const data = useSelector((state)=> state.cart.itemList);
-    console.log(data);
+
     return (
         <ChakraProvider>
            

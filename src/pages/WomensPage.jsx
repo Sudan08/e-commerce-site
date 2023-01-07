@@ -6,19 +6,21 @@ import { NewProductsCards } from '../components/homeui/Cards';
 // import { Fakedata } from '../fakeData/Fakedata';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
+import useGetItems from '../components/customHooks/useGetItems';
 
 const WomensPage = () => {
+    const {result:{data}} = useGetItems("mendatas");
     const [sort , setSort] = useState('');
     
-    const data = useMemo(()=>{
+    const itemData = useMemo(()=>{
         if(sort === 'lh'){
-            return Fakedata.sort((a,b) => a.price - b.price);
+            return data.sort((a,b) => a.price - b.price);
         }
         else if(sort === 'hl'){
-            return Fakedata.sort((a,b) => b.price - a.price);
+            return data.sort((a,b) => b.price - a.price);
         }
         else{
-            return Fakedata;
+            return data;
         }
     },[sort]);
 
