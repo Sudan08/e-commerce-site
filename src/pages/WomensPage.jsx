@@ -7,6 +7,7 @@ import { NewProductsCards } from '../components/homeui/Cards';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 import useGetItems from '../components/customHooks/useGetItems';
+import { Link } from 'react-router-dom';
 
 const WomensPage = () => {
     const {result:{data} , status } = useGetItems("womendatas");
@@ -22,7 +23,7 @@ const WomensPage = () => {
         else{
             return data;
         }
-    },[sort]);
+    },[sort , data]);
 
     return (
         <>
@@ -64,8 +65,11 @@ const WomensPage = () => {
                             <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
                          
                                 {womenItems.map((data , index) => (
-                                    <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} /></GridItem>
-                        
+                                    <GridItem key={index} colSpan={1}>
+                                   
+                                        <NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} />
+                                       
+                                    </GridItem>
                                 ))}
                             </Grid>
                         )}
