@@ -25,7 +25,7 @@ const NavBar= ()=> {
                     {totalItems}
                 </Box>
                 
-                <Link to='/'>
+                <Link>
                     {colorMode === "light"
                         ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
                         : (<Icon h={'25px'} w={'25px'} as={BsMoon} onClick={toggleColorMode}></Icon>)}

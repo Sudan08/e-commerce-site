@@ -11,7 +11,7 @@ export default function useGetItems(url){
         if (!url){
             setData([]);
         }  else{
-            axios.get(`${BASEURL}/api/${url}?populate=*`)
+            axios.get(`${BASEURL}/api/${url}`)
                 .then((res)=>{
                     setData(res.data);
                     setStatus("Loaded");

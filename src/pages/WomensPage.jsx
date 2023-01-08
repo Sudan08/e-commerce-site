@@ -10,7 +10,8 @@ import useGetItems from '../components/customHooks/useGetItems';
 import { Link } from 'react-router-dom';
 
 const WomensPage = () => {
-    const {result:{data} , status } = useGetItems("womendatas");
+    const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
+    console.log(data);
     const [sort , setSort] = useState('');
     console.log(data);
     const womenItems = useMemo(()=>{

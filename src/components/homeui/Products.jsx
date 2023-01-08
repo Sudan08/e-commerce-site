@@ -7,7 +7,7 @@ import useGetItems from '../customHooks/useGetItems';
 
 const Products = () => {
     const CartItems = useSelector((state)=> state.cart.itemList);
-    const {result : {data} , status} = useGetItems("mendatas");
+    const {result : {data} , status} = useGetItems("items?populate=*    ");
     console.log(status);
     return (
         <VStack>
