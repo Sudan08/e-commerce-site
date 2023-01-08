@@ -19,7 +19,7 @@ const LoginUI = () => {
     const toast = useToast();
     
     const onsubmit = (data) => {
-        axios.post(BASEURL+'/auth/local',{
+        axios.post(BASEURL+'/api/auth/local',{
             identifier: data.email,
             password: data.password,
         })
