@@ -25,7 +25,7 @@ function App() {
                     <Route path="Register" element={<Register />}></Route>
                     <Route path="Women" element={<WomensPage />}></Route>
                     <Route path="Men" element={<MenPage />}></Route>
-                    <Route path="/:id" element={<ItemPage />}></Route>
+                    <Route path="/item/:id" element={<ItemPage />}></Route>
                 </Routes>
             </BrowserRouter>
         </ChakraProvider>

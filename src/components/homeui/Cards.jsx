@@ -61,7 +61,7 @@ const NewProductsCards =({imgUrl,name,id,price}) =>{
 
     return <>
         <Card bg={'transparent'} id={id}>
-            <Link to={`/${name}:${id}`}>
+            <Link to={`/item/${id}`}>
                 <CardHeader>
                     <Image src={BASEURL+imgUrl} alt="img" height={["200px","350px","450px"]} onMouseOver={()=>{return null;}}/>
                 </CardHeader>
