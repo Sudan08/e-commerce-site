@@ -1,19 +1,31 @@
-import { Box, Button, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, FormControl, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import {AiOutlineSearch} from 'react-icons/ai';
 import { NewProductsCards } from '../components/homeui/Cards';
 // import { Fakedata } from '../fakeData/Fakedata';
-import { useEffect } from 'react';
+
 import { useMemo } from 'react';
 import useGetItems from '../components/customHooks/useGetItems';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+
 
 const WomensPage = () => {
     const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
-    console.log(data);
     const [sort , setSort] = useState('');
-    console.log(data);
+
+    const [priceData , setPriceData] = useState({
+        low: 0,
+        high: 0,
+    });
+
+    const [submit , setSubmit] = useState(false);
+
+    useEffect(()=>{
+        setSubmit(false);
+    },[priceData]);
+
+
     const womenItems = useMemo(()=>{
         if(sort === 'lh'){
             return data.sort((a,b) => a.attributes.price - b.attributes.price);
@@ -21,10 +33,19 @@ const WomensPage = () => {
         else if(sort === 'hl'){
             return data.sort((a,b) => b.attributes.price - a.attributes.price);
         }
+        else if(submit === true){
+            return data.filter((item) => item?.attributes.price >= priceData.low && item?.attributes.price <= priceData.high);
+           
+        } 
         else{
-            return data;
+            if(data){
+                return data;
+            }
+            else{
+                return [];
+            }
         }
-    },[sort , data]);
+    },[sort, submit, data]);
 
     return (
         <>
@@ -37,9 +58,11 @@ const WomensPage = () => {
                                 Price
                             </Text>
                             <HStack p={3}>
-                                <Input placeholder='Min'/>
-                                <Input placeholder='Max'/>
-                                <Button><Icon as={AiOutlineSearch}/></Button>
+                                <FormControl>
+                                    <Input type={"number"} onChange={(e) => {setPriceData({...priceData,low:e.target.value});}} name={"min"} placeholder='Min'/>
+                                    <Input type={"number"} onChange={(e) => {setPriceData({...priceData,high:e.target.value});}} name={"min"} placeholder='Max'/>
+                                    <Button type={"submit"} onClick={()=>{setSubmit(true);}}><Icon as={AiOutlineSearch}/></Button>
+                                </FormControl>
                             </HStack>
                             <Text fontWeight={"bold"} px={3}>
                                 Category
@@ -64,14 +87,15 @@ const WomensPage = () => {
                         </HStack>
                         {status === 'Loading'?(<Spinner size={"xl"}/>):(
                             <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
-                         
-                                {womenItems.map((data , index) => (
-                                    <GridItem key={index} colSpan={1}>
+                                {womenItems.length === 0?(<Text mx={4} fontSize={"5xl"}>Not found</Text>):(
+                                    womenItems.map((data , index) =>(
+                                        <GridItem key={index} colSpan={1}>
                                    
-                                        <NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} />
+                                            <NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} />
                                        
-                                    </GridItem>
-                                ))}
+                                        </GridItem>
+                                    ))
+                                )}
                             </Grid>
                         )}
                     </VStack>

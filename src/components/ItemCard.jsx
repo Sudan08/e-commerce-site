@@ -5,11 +5,13 @@ import useGetItems from './customHooks/useGetItems';
 import { GrFormPreviousLink , GrFormNextLink} from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/CartSlicer';
+import { Link } from 'react-router-dom';
 
 const ItemCard = ({id}) => {
     id = parseInt(id);
     const {result :{data} , status} = useGetItems("items/"+id+"?populate=*");
-
+    const {result : {data : alldata}} = useGetItems("items");
+    const len = alldata?.length; 
     const item = {
         name: data?.attributes?.itemName,
         price: data?.attributes?.price,
@@ -19,6 +21,8 @@ const ItemCard = ({id}) => {
     const toast = useToast();
     const dispatch = useDispatch();
     const CartItems = useSelector((state)=> state.cart.itemList);
+    
+
     const handleAddToCart = () => {
         const existingItem = CartItems.find((item) => item.id === id);
      
@@ -53,7 +57,11 @@ const ItemCard = ({id}) => {
     return (
         <Box width={"100vw"} height={"90vh"} display={"flex"} justifyContent={"center"} alignItems={"center"} mt={5}>
             <HStack justifyContent={"space-between"}>
-                {id > 0?<Button><Icon as={GrFormPreviousLink}></Icon></Button>:<></>}
+                {id > 1?(
+                    <Link to={`/item/${id-1}`}>
+                        <Button><Icon as={GrFormPreviousLink} /></Button>
+                    </Link>
+                ):<></>}
                 <Box p={5} boxShadow={"rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"} w={"auto"} h={"auto"}>
                     {status === "Loading"?(<Spinner size={"xl"}/>):(
                         <HStack m={5} gap={10}>
@@ -71,7 +79,11 @@ const ItemCard = ({id}) => {
                         </HStack>
                     )}
                 </Box>
-                <Button><Icon as={GrFormNextLink} /></Button>
+                {id < len && id !== 0?(
+                    <Link to={`/item/${id+1}`}>
+                        <Button><Icon as={GrFormNextLink} /></Button>
+                    </Link>
+                ):<></>}
             </HStack>
         </Box>
     );
