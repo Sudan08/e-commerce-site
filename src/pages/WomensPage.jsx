@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import {AiOutlineSearch} from 'react-icons/ai';
@@ -13,12 +13,12 @@ import { useEffect } from 'react';
 const WomensPage = () => {
     const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
     const [sort , setSort] = useState('');
-
     const [priceData , setPriceData] = useState({
         low: 0,
         high: 0,
     });
 
+    
     const [submit , setSubmit] = useState(false);
 
     useEffect(()=>{
@@ -38,43 +38,48 @@ const WomensPage = () => {
            
         } 
         else{
-            if(data){
-                return data;
-            }
-            else{
-                return [];
-            }
+            return data;
         }
-    },[sort, submit, data]);
+    },[sort, submit, data, priceData.low, priceData.high]);
+
+    const handleReset = () => {
+        // eslint-disable-next-line no-unused-expressions, no-sequences
+        setSort(""),
+        setPriceData({low:0,high:0}),
+        setSubmit(false);
+
+    };
 
     return (
         <>
             <NavBar />
             <VStack>
                 <HStack mt={'50px'} justifyContent={"space-between"} w={'100vw'} flexDirection={['column','column','row']} alignItems={'flex-start'}>
-                    <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"15w"} m={"5"}>
-                        <VStack alignItems={'flex-start'}>
-                            <Text fontWeight={"bold"} px={3} mt={1}>
+                    <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"15w"} m={"5"} justifyContent={"center"} alignItems={"flex-start"}>
+                        <Text fontWeight={"bold"} px={3} mt={1}>
                                 Price
-                            </Text>
+                        </Text>
+                        <FormControl>
                             <HStack p={3}>
-                                <FormControl>
-                                    <Input type={"number"} onChange={(e) => {setPriceData({...priceData,low:e.target.value});}} name={"min"} placeholder='Min'/>
-                                    <Input type={"number"} onChange={(e) => {setPriceData({...priceData,high:e.target.value});}} name={"min"} placeholder='Max'/>
-                                    <Button type={"submit"} onClick={()=>{setSubmit(true);}}><Icon as={AiOutlineSearch}/></Button>
-                                </FormControl>
+                                <Input type={"number"} onChange={(e) => {setPriceData({...priceData,low:e.target.value});}} value={priceData.low} name={"min"} placeholder='Min'/>
+                                <Input type={"number"} onChange={(e) => {setPriceData({...priceData,high:e.target.value});}} value={priceData.high} name={"min"} placeholder='Max'/>
+                                <Button type={"submit"} onClick={()=>{setSubmit(true);}}><Icon as={AiOutlineSearch}/></Button>
                             </HStack>
-                            <Text fontWeight={"bold"} px={3}>
+                        </FormControl>
+                        <Flex width={"20vw"} justifyContent={"center"}>
+                            <Button width={"15vw"} onClick={handleReset}>Reset</Button>
+                        </Flex>
+                        <Text fontWeight={"bold"} px={3}>
                                 Category
-                            </Text>
-                            <Select p={3}>
-                                <option hidden>Select Category</option>
-                                <option>Pants</option>
-                                <option>Boots</option>
-                                <option>Shirt</option>
-                                <option>Saree</option>
-                            </Select>
-                        </VStack>
+                        </Text>
+                        <Select p={3}>
+                            <option hidden>Select Category</option>
+                            <option>Pants</option>
+                            <option>Boots</option>
+                            <option>Shirt</option>
+                            <option>Saree</option>
+                        </Select>
+                      
                     </VStack>
                     <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"75vw"} m={"5"}>
                         <HStack justifyContent={"space-between"} width={'75vw'} m={'3'}>
