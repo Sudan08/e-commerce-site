@@ -6,12 +6,15 @@ import { NewProductsCards } from '../components/homeui/Cards';
 // import { Fakedata } from '../fakeData/Fakedata';
 
 import { useMemo } from 'react';
-import useGetItems from '../components/customHooks/useGetItems';
+import fetchItems from '../components/customHooks/fetchItems';
 import { useEffect } from 'react';
+import { useQuery } from 'react-query';
 
 
 const WomensPage = () => {
-    const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
+    // const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
+
+    const {isLoading , data } = useQuery(['womendata','items?filters[collection][$eq]=Women&populate=*'],fetchItems);
     const [sort , setSort] = useState('');
     const [priceData , setPriceData] = useState({
         low: 0,
@@ -28,13 +31,13 @@ const WomensPage = () => {
 
     const womenItems = useMemo(()=>{
         if(sort === 'lh'){
-            return data.sort((a,b) => a.attributes.price - b.attributes.price);
+            return data?.sort((a,b) => a.attributes.price - b.attributes.price);
         }
         else if(sort === 'hl'){
-            return data.sort((a,b) => b.attributes.price - a.attributes.price);
+            return data?.sort((a,b) => b.attributes.price - a.attributes.price);
         }
         else if(submit === true){
-            return data.filter((item) => item?.attributes.price >= priceData.low && item?.attributes.price <= priceData.high);
+            return data?.filter((item) => item?.attributes.price >= priceData.low && item?.attributes.price <= priceData.high);
            
         } 
         else{
@@ -49,7 +52,6 @@ const WomensPage = () => {
         setSubmit(false);
 
     };
-
     return (
         <>
             <NavBar />
@@ -90,9 +92,9 @@ const WomensPage = () => {
                                 <option value={"hl"}>High to Low</option>
                             </Select>
                         </HStack>
-                        {status === 'Loading'?(<Spinner size={"xl"}/>):(
+                        {(isLoading)?(<Spinner size={"xl"}/>):(
                             <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
-                                {womenItems.length === 0?(<Text mx={4} fontSize={"5xl"}>Not found</Text>):(
+                                {womenItems?.length === 0?(<Text mx={4} fontSize={"5xl"}>Not found</Text>):(
                                     womenItems.map((data , index) =>(
                                         <GridItem key={index} colSpan={1}>
                                    

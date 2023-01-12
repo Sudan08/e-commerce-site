@@ -2,7 +2,7 @@ import { Button, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VSt
 import React, { useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import useGetItems from '../components/customHooks/useGetItems';
+import useGetItems from '../components/customHooks/fetchItems';
 import { NewProductsCards } from '../components/homeui/Cards';
 import NavBar from '../components/NavBar';
 

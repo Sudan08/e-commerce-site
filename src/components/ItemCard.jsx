@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Icon, Image, Spinner, Text, useToast, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { BASEURL } from '../api/api';
-import useGetItems from './customHooks/useGetItems';
+import useGetItems from './customHooks/fetchItems';
 import { GrFormPreviousLink , GrFormNextLink} from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/CartSlicer';

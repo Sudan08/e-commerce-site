@@ -3,12 +3,15 @@ import React from 'react';
 import { NewProductsCards } from './Cards';
 // import { Fakedata } from '../../fakeData/Fakedata';
 import { useSelector } from 'react-redux';
-import useGetItems from '../customHooks/useGetItems';
+import fetchItems from '../customHooks/fetchItems';
+import { useQuery } from 'react-query';
 
 const Products = () => {
     const CartItems = useSelector((state)=> state.cart.itemList);
-    const {result : {data} , status} = useGetItems("items?populate=*    ");
-    console.log(status);
+    // const {result : {data} , status} = useGetItems("items?populate=*");
+
+
+    const { isloading , data } = useQuery(['productdata','items?populate=*'],fetchItems);
     return (
         <VStack>
             <Box width={'100vw'}>
@@ -31,7 +34,7 @@ const Products = () => {
                 </Stack>
             </Box>
             <Box>
-                {status === 'Loading'?(<Spinner size={"xl"} m={10}/>):(
+                {isloading?(<Spinner size={"xl"} m={10}/>):(
                     <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
                         {data?.map((data , index) => (
                             <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} /></GridItem>
