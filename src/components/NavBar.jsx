@@ -9,9 +9,9 @@ import { useState } from "react";
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selected , setSelected] = useState('Home');
-    const location = useLocation;
-    console.log(location.pathname);
+    // const [selected , setSelected] = useState('Home');
+    // const location = useLocation;
+    // console.log(location.pathname);
      
     return (
         <VStack height={"100%"} width={"100%"}>
