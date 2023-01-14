@@ -1,7 +1,6 @@
 import {Route, Routes, BrowserRouter} from "react-router-dom";
 import { QueryClient ,QueryClientProvider } from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
-import { ReactQueryDevtools } from 'react-query/devtools';
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 
@@ -30,7 +29,6 @@ function App() {
                     </Routes>
                 </BrowserRouter>
             </ChakraProvider>
-            <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
         </QueryClientProvider>
     );
 }

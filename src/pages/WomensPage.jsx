@@ -75,6 +75,7 @@ const WomensPage = () => {
             low:0,
             high:0,
         });
+        setSort('');
     };
     
     
