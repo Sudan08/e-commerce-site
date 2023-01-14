@@ -34,14 +34,14 @@ const WomensPage = () => {
 
 
     const [state ,dispatch] = useReducer(reducer,null);
-    const {isLoading , data ,status} = useQuery(['womendata'],()=>fetchItems("items?filters[collection][$eq]=Women&populate=*"));
+    const {isLoading , data } = useQuery(['womendata'],()=>fetchItems("items?filters[collection][$eq]=Women&populate=*"));
 
     
     useEffect(()=>{
         if(isLoading === false){
             dispatch({type : 'init', payload : data});
         }
-    },[status]);
+    },[isLoading]);
 
     const handlesort = (e)=>{
         if (e.target.value === "lh"){
@@ -126,7 +126,7 @@ const WomensPage = () => {
                         </FormControl>
                         <Flex width={"20vw"} justifyContent={"center"}>
                             <Button width={"15vw"} onClick={handleReset}>Reset</Button>
-                        </Flex>00
+                        </Flex>
                         <Text fontWeight={"bold"} px={3}>
                                 Category
                         </Text>
@@ -168,4 +168,4 @@ const WomensPage = () => {
     );
 };
 
-export default WomensPage;
+export {reducer, WomensPage};

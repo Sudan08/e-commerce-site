@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 
 import Signup from "./pages/Signup";
 import Register from "./pages/Register";
-import WomensPage from "./pages/WomensPage";
+import {WomensPage} from "./pages/WomensPage";
 import MenPage from "./pages/MenPage";
 import ItemPage from "./pages/ItemPage";
 

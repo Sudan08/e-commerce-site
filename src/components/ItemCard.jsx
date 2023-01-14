@@ -1,17 +1,19 @@
 import { Box, Button, HStack, Icon, Image, Spinner, Text, useToast, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { BASEURL } from '../api/api';
-import useGetItems from './customHooks/fetchItems';
+import fetchItems from './customHooks/fetchItems';
 import { GrFormPreviousLink , GrFormNextLink} from "react-icons/gr";
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../store/CartSlicer';
 import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 const ItemCard = ({id}) => {
     id = parseInt(id);
-    const {result :{data} , status} = useGetItems("items/"+id+"?populate=*");
-    const {result : {data : alldata}} = useGetItems("items");
+    const {data , isLoading} = useQuery(["item" + id],()=>fetchItems("items/"+id+"?populate=*"));
+    const {data :alldata} = useQuery(["items"],()=>fetchItems("items"));
     const len = alldata?.length; 
+
     const item = {
         name: data?.attributes?.itemName,
         price: data?.attributes?.price,
@@ -63,7 +65,7 @@ const ItemCard = ({id}) => {
                     </Link>
                 ):<></>}
                 <Box p={5} boxShadow={"rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"} w={"auto"} h={"auto"}>
-                    {status === "Loading"?(<Spinner size={"xl"}/>):(
+                    {isLoading?(<Spinner size={"xl"}/>):(
                         <HStack m={5} gap={10}>
                             <Box>
                                 <Image src={BASEURL+item.url} height={"450px"} width={"300px"}></Image>
