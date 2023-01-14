@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 const WomensPage = () => {
     // const {result:{data} , status } = useGetItems("items?filters[collection][$eq]=Women&populate=*");
 
-    const {isLoading , data } = useQuery(['womendata','items?filters[collection][$eq]=Women&populate=*'],fetchItems);
+    const {isLoading , data } = useQuery(['womendata'],()=>fetchItems("items?filters[collection][$eq]=Women&populate=*"));
     const [sort , setSort] = useState('');
     const [priceData , setPriceData] = useState({
         low: 0,
@@ -86,7 +86,7 @@ const WomensPage = () => {
                     <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"75vw"} m={"5"}>
                         <HStack justifyContent={"space-between"} width={'75vw'} m={'3'}>
                             <Text mx={5} fontSize={"2xl"}>Womens Cloths</Text>
-                            <Select value={sort} width={"10vw"} mx={5} onChange={(e)=>setSort(e.target.value)}>
+                            <Select value={sort} width={"10vw"} mx={5} onChange={(e)=>setSort(e.target.value)} disabled={isLoading}>
                                 <option hidden>Sort</option>
                                 <option value={"lh"}>Low to High</option>
                                 <option value={"hl"}>High to Low</option>

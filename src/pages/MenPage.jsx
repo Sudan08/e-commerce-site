@@ -1,14 +1,16 @@
 import { Button, Grid, GridItem, HStack, Icon, Input, Select, Spinner, Text, VStack } from '@chakra-ui/react';
 import React, { useMemo, useState } from 'react';
-import { useEffect } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import useGetItems from '../components/customHooks/fetchItems';
+import { useQuery } from 'react-query';
+import fetchItems from '../components/customHooks/fetchItems';
 import { NewProductsCards } from '../components/homeui/Cards';
 import NavBar from '../components/NavBar';
 
 
 const MenPage = () => {
-    const {result:{data} , status} = useGetItems("items?filters[collection][$eq]=Men&populate=*");
+    // const {result:{data} , status} = useGetItems("items?filters[collection][$eq]=Men&populate=*");
+
+    const {isLoading , data} = useQuery(['mendata'],()=>fetchItems("items?filters[collection][$eq]=Men&populate=*"));
     const [sort , setSort] = useState('');
     
 
@@ -58,13 +60,13 @@ const MenPage = () => {
                     <VStack boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'} width={"75vw"} m={"5"}>
                         <HStack justifyContent={"space-between"} width={'75vw'} m={'3'}>
                             <Text mx={5} fontSize={"2xl"}>Men's Cloths</Text>
-                            <Select width={"10vw"} mx={5} onChange={(e)=>setSort(e.target.value)} disabled={status === "Loadings"}>
+                            <Select width={"10vw"} mx={5} onChange={(e)=>setSort(e.target.value)} disabled={isLoading}>
                                 <option hidden>Sort</option>
                                 <option value={"lh"}>Low to High</option>
                                 <option value={"hl"}>High to Low</option>
                             </Select>
                         </HStack>
-                        {status === 'Loading'?(<Spinner size={"xl"} />):(
+                        {isLoading?(<Spinner size={"xl"} />):(
                             <Grid templateColumns={['repeat(1,1fr)','repeat(2,1fr)','repeat(4,1fr)']}>
                                 {menItems?.map((data , index) => (
                                     <GridItem key={index} colSpan={1}><NewProductsCards id={data.id} name={data?.attributes.itemName} imgUrl={data.attributes?.itemImage?.data[0]?.attributes?.url} price={data?.attributes.price} /></GridItem>

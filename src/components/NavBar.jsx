@@ -1,38 +1,18 @@
 // import {} from "react";
 
 
-import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, HStack, Icon, List, ListItem, Text, useBreakpointValue, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
-import {AiOutlineHeart , AiOutlineSearch ,AiOutlineShoppingCart ,AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
-import {BsMoon, BsSun} from 'react-icons/bs';
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Box, Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, List, ListItem, Text, useBreakpointValue, useDisclosure, VStack } from "@chakra-ui/react";
+import {AiOutlineMenu,AiOutlineClose} from 'react-icons/ai';
+import Icons from '../components/homeui/Icons';
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 const NavBar= ()=> {
     const isDesktop = useBreakpointValue({base:false,lg:true});
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { colorMode, toggleColorMode } = useColorMode();
+    const [selected , setSelected] = useState('Home');
+    const location = useLocation;
+    console.log(location.pathname);
      
-    const Icons = () =>{
-        const totalItems = useSelector((state)=>state.cart.totalItems);
-        return <>
-            <HStack  gap={'10px'}>
-                <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} />
-                <Icon as={AiOutlineHeart} h={'25px'} w={'25px'} />
-                <Link to={'/Cart'} >
-                    <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />
-                </Link>
-
-                <Box className="cartNumber">
-                    {totalItems}
-                </Box>
-                
-                <Link>
-                    {colorMode === "light"
-                        ? (<Icon h={'25px'} w={'25px'} as={BsSun} onClick={toggleColorMode}></Icon>)
-                        : (<Icon h={'25px'} w={'25px'} as={BsMoon} onClick={toggleColorMode}></Icon>)}
-                </Link>
-            </HStack>
-        </>;
-    };
     return (
         <VStack height={"100%"} width={"100%"}>
             <Box width={"100vw"} height={"10vh"}>
@@ -48,11 +28,11 @@ const NavBar= ()=> {
                         <>
                             <VStack>
                                 <List display={'flex'} flexDirection={"row"} margin={'3px'} gap={'30px'} alignItems={'center'} fontSize={'20px'}>
-                                    <Link to={'/'}>
-                                        <ListItem>Home</ListItem>
+                                    <Link to={'/'} >
+                                        <ListItem value="home">Home</ListItem>
                                     </Link>
-                                    <Link to={'/Women'}>
-                                        <ListItem>Women's</ListItem>
+                                    <Link to={'/Women'} >
+                                        <ListItem >Women's</ListItem>
                                     </Link>
                                     <Link to={'/Men'}>
                                         <ListItem>Men's</ListItem> 

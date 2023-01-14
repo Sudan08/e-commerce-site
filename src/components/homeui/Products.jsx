@@ -11,7 +11,7 @@ const Products = () => {
     // const {result : {data} , status} = useGetItems("items?populate=*");
 
 
-    const { isloading , data } = useQuery(['productdata','items?populate=*'],fetchItems);
+    const { isloading , data } = useQuery(['productdata'],()=>fetchItems('items?populate=*'));
     return (
         <VStack>
             <Box width={'100vw'}>
