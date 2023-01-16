@@ -22,6 +22,8 @@ function reducer(state,action){
         return state?.sort((a,b) => b.attributes.price - a.attributes.price);
     case "submit":
         return state?.filter((item) => item?.attributes.price >= action.payload.low && item?.attributes.price <= action.payload.high);
+    case "cat_sort":
+        return state?.filter((item) => item?.attributes.subCategories === action.payload);
     default:
         return state;
     }
@@ -31,12 +33,12 @@ function reducer(state,action){
 
 
 const WomensPage = () => {
-
-
+    
+    
     const [state ,dispatch] = useReducer(reducer,null);
     const {isLoading , data } = useQuery(['womendata'],()=>fetchItems("items?filters[collection][$eq]=Women&populate=*"));
 
-    
+
     useEffect(()=>{
         if(isLoading === false){
             dispatch({type : 'init', payload : data});
@@ -55,6 +57,16 @@ const WomensPage = () => {
     };
     const [sort , setSort] = useState('');
 
+    const handleCatSort = (e)=>{
+        if (e.target.value === "Boots"){
+            setCatSort('Boots');
+            dispatch({type: "cat_sort", payload: "Boots"});
+        }
+        if (e.target.value === 'Watch'){
+            setCatSort('Watch');
+            dispatch({type:"cat_sort", payload:"Watch"});
+        }
+    };
 
 
 
@@ -63,6 +75,7 @@ const WomensPage = () => {
         high: 0,
     });
     
+    const [catSort, setCatSort] = useState('');
     
 
     const handleSubmit = () => {
@@ -130,9 +143,9 @@ const WomensPage = () => {
                         <Text fontWeight={"bold"} px={3}>
                                 Category
                         </Text>
-                        <Select p={3}>
+                        <Select value={catSort} onChange={(e)=>{handleCatSort(e);}} p={3}>
                             <option hidden>Select Category</option>
-                            <option>Pants</option>
+                            <option>Watch</option>
                             <option>Boots</option>
                             <option>Shirt</option>
                             <option>Saree</option>
