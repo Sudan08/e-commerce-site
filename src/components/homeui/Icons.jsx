@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Input, useColorMode } from "@chakra-ui/react";
+import { Box, FormControl, HStack, Icon, Input, useColorMode } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsMoon, BsSun } from "react-icons/bs";
@@ -20,12 +20,26 @@ const Icons = () =>{
         setSearch({...search,searchTerm : e.target.value});
     };
 
+    const fetchData = () =>{
+        console.log("Hello");
+    };
+
 
     return <>
         <HStack  gap={'10px'}>
             <Icon as={AiOutlineSearch} h={'25px'} w={'25px'} onClick={handleClick}/>
-            {console.log(search.clicked)}
-            {search.clicked?<Input placeholder="Search..." onChange={(e)=>{handleChange(e);}}/>:null}
+            {search.clicked?
+                <FormControl>
+                    <Input list="products" placeholder="Search..." onChange={(e)=>{handleChange(e);}} />
+                    <datalist id="products">
+                        <option value="Watch"></option>
+                        <option value="Boots"></option>
+                        <option value="Shawl"></option>
+                        <option value="T-shirt"></option>
+                        <option value="Sweather"></option>
+                    </datalist>
+                </FormControl>
+                :null}
             <Icon as={AiOutlineHeart} h={'25px'} w={'25px'} />
             <Link to={'/Cart'} >
                 <Icon as={AiOutlineShoppingCart} h={'25px'} w={'25px'} />

@@ -1,1 +1,1 @@
-export const BASEURL = 'http://localhost:1337';
+export const BASEURL = 'https://strapi-production-0f2b.up.railway.app/';
